@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>the sub</title>
+
+    <link rel="stylesheet" href="master.css">
+  </head>
+  <body>
+    <div class="centered hidden" id="game">
+      <button type="button" class="pause_button" onclick="pause();toggleMusic();">pause</button>
+      <button type="button" class="pause_button" id="speed" onclick="toggleSpeed();" style="top:18%">speed up</button>
+
+      <div class="object paper" id="attendance">
+        ATTENDANCE
+        <hr>
+        <div class="text">
+
+        </div>
+      </div>
+      <div class="object" id="file_binder">
+        <div class="text">
+        </div>
+        <div class="right arrow" onclick="page(1)">></div><div class="left arrow hidden" onclick="page(-1)"><</div>
+        <div class="binder_hole top"></div><div class="binder_hole bottom"></div>
+      </div>
+      <div class="object paper" id="seating">
+        <span>SEATING PLAN</span>
+        <hr>
+        <div class="tables">
+
+        </div>
+        <div class="tooltip hidden">
+          wblwkjbowijroij
+        </div>
+        <div class="buttons hidden">
+          <hr>
+          <a type="button" name="button" onclick="revertSeating();sounds.click.play()">revert changes</a><br>
+          <a type="button" name="button" onclick="announceNewSeating();sounds.click.play()"><b>announce new seating</b></a>
+        </div>
+      </div>
+      <div class="object paper" id="teachers_note">
+        notes:
+        <ul>
+          <li>hello please let the students know that the original teacher is sick</li>
+          <li>also if kids complain about their partners feel free to rearrange them</li>
+          <li><b>students should sit with their partners!!</b></li>
+          <li>p.s. you're only getting paid based on how good the kids' grades are</li>
+          <li>sorry i don't make the rules</li>
+        </ul>
+      </div>
+      <div class="object" id="clock">
+      </div>
+    </div>
+
+    <div class="screen centered hidden" id="pause">
+      <button type="button" class="pause_button" onclick="unpause();ui.game.classList.remove('hidden');sounds.click.play();toggleMusic();">play</button>
+      <div class="clock"></div>
+      <div id="classroom" class="centered">
+
+      </div>
+      <div id="player_info" class="centered">
+        <span id="level_text"></span><br><br>
+        <h2>balance</h2><span id="balance"></span>
+      </div>
+    </div>
+
+    <div class="screen centered hidden" id="end">
+      <div class="clock"></div>
+      <div class="player_info centered">
+        <span class="level_text">
+          <div class="table_wrapper">
+            <table>
+              <thead>
+                <h2>REPORT CARD</h2>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="names"></td>
+                  <td class="grades"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h1>end-of-day roundup</h1>
+          <hr>
+          <h2>+ paycheck</h2>
+          $<span class="revenue"></span>
+          <br><br>
+          <h2>- living expenses</h2>
+          $5
+          <hr>
+          <h2>balance</h2>
+          $<span class="balance"></span>
+        </span>
+      </div>
+      <button type="button" class="pause_button" onclick="setup();ui.end.classList.add('hidden');">continue...</button>
+    </div>
+
+    <div class="screen centered hidden" id="gameover">
+      <div class="centered" style="text-align:center">
+        thanks for playing!
+
+        <div class="win hidden">
+          you successfully paid off all your debt!
+        </div>
+        <div class="lose hidden">
+          you failed to pay off all your debt and ended up taking another loan...
+        </div>
+        <hr>
+        made for <a href="https://itch.io/jam/gmtk-2021" target="_blank">the 2021 gmtk game jam</a><br>
+        code & sound by <a href="https://frogmen.itch.io" target="_blank">q1</a><br>
+        art & ideas by <a href="https://twitter.com/shakespiel" target="_blank">kev</a>
+        <br><br>
+        <button class="pause_button" style="position:relative;transform:none;left:0;" onclick="mainmenu()">back to main menu</button>
+      </div>
+    </div>
+
+    <div id="start" class="centered hidden" style="text-align:center">
+      you need to pay your rent<br>
+      and this scrappy school needs a substitute teacher
+      <br><br>
+      <button type="button" onclick="config.endlessMode = false;init()">take up the job</button><br>
+      <button type="button" class="pause_button" style="position:relative;transform:none;left:0;" onclick="config.endlessMode = true;init();">endless mode</button>
+    </div>
+
+    <div id="loading" class="centered">
+      <img src="" alt="">
+      <div class="text hidden">
+
+      </div>
+    </div>
+  </body>
+  <script src="howler.core.js"></script>
+  <script src="bank.js"></script>
+  <script src="drag.js"></script>
+  <script src="util.js"></script>
+  <script src="round.js"></script>
+  <script src="dialogue.js"></script>
+  <script src="pause.js"></script>
+  <script src="gameend.js"></script>
+  <script src="main.js"></script>
+  <script type="text/javascript">
+  window.onload = function() {
+    sounds = {
+      click: new Howl({src: "sounds/click.mp3"}), //
+      pickup: new Howl({src: "sounds/click.mp3"}), //
+      drop: new Howl({src: "sounds/drop.mp3"}), //
+      popup: [
+        new Howl({src: "sounds/popups/1.mp3"}),
+        new Howl({src: "sounds/popups/2.mp3"}),
+        new Howl({src: "sounds/popups/3.mp3"}),
+      ], //
+      menu: new Howl({src: "sounds/menu.mp3",loop:true}), //
+      atmosphere: new Howl({
+        src: "sounds/atmosphere.flac",
+        loop: true,
+        volume: 0.1,
+      }), //
+      level_complete: new Howl({
+        src:"sounds/level_complete.mp3"
+      }), //
+    };
+
+    music = [
+      new Howl({
+        src: "sounds/music/1.mp3",
+        loop: true,
+      }),
+      new Howl({
+        src: "sounds/music/2.mp3",
+        loop: true,
+      }),
+      new Howl({
+        src: "sounds/music/3.mp3",
+        loop: true,
+      }),
+      new Howl({
+        src: "sounds/music/4.mp3",
+        loop: true,
+      }),
+    ];
+
+    ui.loading_text.textContent = "just a moment";
+    ui.loading_icon.src = "icons/"+bank.icons[Math.random() * bank.icons.length | 0];
+
+    let i = 0;
+    let check = setInterval(function() {
+      i++;
+      if (ui.loading_text.textContent == "just a moment.....") {
+        ui.loading_text.textContent = "just a moment";
+        ui.loading_icon.src = "icons/"+bank.icons[Math.random() * bank.icons.length | 0];
+      }
+      ui.loading_text.textContent += ".";
+      if (
+        sounds.atmosphere.state() == "loaded" &&
+        music[0].state() == "loaded" &&
+        music[1].state() == "loaded" &&
+        music[2].state() == "loaded" &&
+        music[3].state() == "loaded" &&
+        sounds.click.state() == "loaded" &&
+        sounds.pickup.state() == "loaded" &&
+        sounds.level_complete.state() == "loaded" &&
+        sounds.drop.state() == "loaded" &&
+        sounds.menu.state() == "loaded" &&
+        sounds.popup[0].state() == "loaded" &&
+        sounds.popup[1].state() == "loaded" &&
+        sounds.popup[2].state() == "loaded"
+      ) {
+        ui.loading.classList.add("hidden");
+        document.getElementById("start").classList.remove("hidden");
+        sounds.atmosphere.play();
+        clearInterval(check);
+
+        document.mouseout = function() {
+          document.onmouseup = null;
+          document.onmousemove = null;
+
+          sounds.drop.play();
+        }
+      }
+    }, 100);
+  };
+  </script>
+</html>

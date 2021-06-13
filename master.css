@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --primary: #094e63;
+  --trim: #f5c842;
+  --paper: #fffded;
+  --bg: #63a9cf;
+
+  --a4-width: 15em;
+  --a4-height: 20em;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--primary);
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+}
+
+div {
+  border-color: inherit;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+span {
+  border-color: inherit;
+}
+
+*::selection {
+  background-color: var(--bg);
+  color: var(--primary);
+}
+
+.hidden {
+  display: none;
+  animation: none;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.screen {
+  width: 500px;
+  height: 500px;
+  background-color: var(--primary);
+  border-radius: 15%;
+  padding: 1em;
+  color: var(--bg);
+  animation: none;
+}
+
+.appear {
+  animation: appear 0.5s;
+}
+
+.object, .popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary);
+  color: var(--bg);
+  box-shadow: rgba(0, 0, 0, 0.7) 10px 10px;
+  /* transition: 0.1s; */
+  cursor: move;
+  cursor: grab;
+  border-color: var(--bg);
+  z-index: 0;
+  box-sizing: border-box;
+  padding: 1em;
+}
+
+.object:active {
+  /* transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.7) 20px 20px; */
+  cursor: grabbing;
+}
+
+.popup {
+  background-color: var(--trim);
+  color: var(--primary);
+  width: var(--a4-height);
+  border-color: var(--trim);
+  animation: appear 0.5s;
+}
+.popup .label {
+  border: 1px solid var(--primary);
+  text-align: center;
+  width: 5em;
+  float: left;
+  margin-right: 1em;
+}
+.popup .x {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  background-color: var(--primary);
+  color: var(--trim);
+  float: right;
+  text-decoration: none;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom-left-radius: 50%;
+  transition: 0.2s;
+  box-shadow: inset rgba(0, 0, 0, 0.7) 3px 3px;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+}
+.popup .x:hover {
+  background-color: var(--trim);
+  color: var(--primary);
+  box-shadow: none;
+}
+.popup:active {
+  cursor: grabbing
+}
+
+.popup.seating button {
+  width: 100%
+}
+
+.gone {
+  animation-name: disappear 0.5s;
+  opacity: 0;
+}
+
+@keyframes appear {
+  from {
+    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0;
+  }
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--primary);
+  width: calc(var(--a4-height) - 8.25em);
+  cursor: pointer;
+  border: 0;
+  box-shadow: rgba(0, 0, 0, 0.7) 3px 3px;
+  background-color: var(--paper);
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+button:hover {
+  background-color: var(--primary);
+  color: var(--trim);
+}
+button:active {
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+hr {
+  border-color: inherit;
+  background-color: inherit;
+  color: inherit;
+}
+
+#clock, .clock {
+  background-color: var(--primary);
+  color: var(--trim);
+  padding: 1em;
+  border-radius: 10%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  font-size: 1.5em;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.paper {
+  background-color: var(--paper);
+  color: var(--primary);
+  border-color: var(--paper);
+}
+
+#game {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+#attendance {
+  width: var(--a4-width);
+  padding: 1em;
+}
+
+#file_binder {
+  width: calc(var(--a4-width) + 5em);
+  height: calc(var(--a4-height) + 2em);
+  padding: 1em;
+  padding-left: 3em;
+  border-color: var(--primary);
+}
+
+#file_binder .text {
+  padding-left: 1em;
+  height: 90%;
+  border-left: 1px solid black;
+  overflow: scroll;
+  cursor: inherit;
+}
+
+#file_binder .arrow {
+  height: 1em;
+  width: 1em;
+  position: absolute;
+  bottom: 0;
+  padding: 0.5em;
+  margin: 0.5em;
+  cursor: pointer;
+  color: var(--trim);
+  text-align: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+#file_binder .arrow:hover {
+  background-color: var(--trim);
+  color: var(--primary);
+}
+#file_binder .arrow:active {
+  opacity: 0.5;
+}
+#file_binder .arrow.right {
+  right: 0;
+}
+#file_binder .arrow.left {
+  left: 3em;
+}
+
+#file_binder .binder_hole {
+  position: absolute;
+  left: 1.5em;
+  height: 5px;
+  width: 1.5em;
+  transform: translateX(-50%);
+  background-color: black;
+}
+#file_binder .binder_hole.top {
+  top: 30%;
+}
+#file_binder .binder_hole.bottom {
+  bottom: 30%;
+}
+
+#teachers_note {
+  width: var(--a4-width);
+  padding: 1em;
+}
+
+#seating {
+  width: var(--a4-height);
+  text-align: center;
+}
+#seating .tables {
+  margin-top: 1em;
+}
+#seating .table {
+  position: relative;
+  display: inline-block;
+  background-color: var(--bg);
+  border-radius: 50%;
+}
+#seating .table.big {
+  width: 7em;
+  height: 7em;
+}
+#seating .table.small {
+  width: 5em;
+  height: 5em;
+}
+
+#seating .table .seat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -1.25em;
+  background-color: var(--primary);
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+}
+
+ul {
+  padding-inline-start: 1em;
+}
+li {
+  margin-bottom: 1em;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--trim);
+}
+a:hover {
+  background-color: var(--trim);
+  color: var(--paper);
+}
+a:active {
+  opacity: 0.5;
+}
+
+
+.icon {
+  float: left;
+  margin-right: 1em;
+  width: 5em;
+  height: 5em;
+  box-sizing: border-box;
+}
+.seat .icon {
+  border: 3px solid var(--primary);
+}
+.icon.small {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.icon.small:hover {
+  border: 3px solid var(--trim);
+}
+.icon.selected {
+  border: 3px solid var(--trim);
+}
+
+.pause_button {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  background-color: var(--primary);
+  color: var(--trim);
+  box-shadow: inset rgba(0, 0, 0, 0.7) 3px 3px;
+}
+.pause_button:hover {
+  background-color: var(--trim);
+  color: var(--primary);
+  box-shadow: none;
+}
+.screen .pause_button {
+  top: 85%
+}
+
+.screen {
+  box-shadow: rgba(0, 0, 0, 0.7) 10px 10px;
+  border-color: var(--primary);
+  cursor: default;
+}
+
+.screen .clock {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.untouchable {
+  pointer-events: none;
+}
+
+h1, h2, .clock {
+  margin: 0;
+  cursor: inherit;
+}
+
+.page .icon {
+  margin-right: 100%;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: var(--trim);
+  color: var(--primary);
+  transform: translate(1em, 1em);
+}
+
+.table_wrapper {
+  height: 9em;
+  overflow: scroll;
+  margin-bottom: 1em;
+}
+
+table {
+  width: 100%;
+  border: 1px solid var(--trim);
+}
+
+td {
+  padding: 1em;
+}
+
+thead {
+  text-align: center;
+  border: 1px solid var(--trim);
+}
+
+#gameover a {
+  color: inherit;
+}
+#gameover a:hover {
+  color: var(--primary);
+}
+
+#loading img {
+  width: 5em;
+  height: 5em;
+  margin: auto;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.7) 10px 10px;
+}
+
+button.down {
+  background-color: var(--trim);
+  color: var(--primary);
+  box-shadow: none;
+}
